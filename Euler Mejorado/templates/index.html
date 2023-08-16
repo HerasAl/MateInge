@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Método de Euler Mejorado</title>
+</head>
+<body>
+    <h1>Método de Euler Mejorado</h1>
+    <form method="post">
+        <label for="x0">x0:</label>
+        <input type="text" id="x0" name="x0" required><br><br>
+        <label for="y0">y0:</label>
+        <input type="text" id="y0" name="y0" required><br><br>
+        <label for="h">Paso (h):</label>
+        <input type="text" id="h" name="h" required><br><br>
+        <label for="n">Número de Iteraciones:</label>
+        <input type="text" id="n" name="n" required><br><br>
+        <button type="submit">Calcular y Graficar</button>
+    </form>
+    {% if img_path %}
+        <h2>Gráfica de la Solución:</h2>
+        <img src="{{ img_path }}" alt="Gráfica">
+    {% endif %}
+</body>
+</html>

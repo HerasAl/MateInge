@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aproximación de Euler</title>
+</head>
+<body>
+    <h1>Aproximación de y' usando el Método de Euler</h1>
+    
+    <form action="/" method="post">
+        x inicial: <input type="text" name="x_initial" value="1"><br>
+        y inicial: <input type="text" name="y_initial" value="-3"><br>
+        x final: <input type="text" name="x_final" value="2"><br>
+        Tamaño de paso: <input type="text" name="step_size" value="0.1"><br>
+        <input type="submit" value="Calcular">
+    </form>
+    
+    {% if plot_url %}
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfica">
+    <h2>Valores aproximados de x e y:</h2>
+    <ul>
+        {% for value in values %}
+        <li>x = {{ value['x'] }}, y = {{ value['y'] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

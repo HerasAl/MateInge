@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>devenir</title>
+</head>
+<body>
+    <h1>Interpolación</h1>
+    <div>
+        <!-- Campos de entrada para los valores X, Y y x -->
+        <label for="X">Valores X:</label>
+        <input type="text" id="X" name="X" value="-1,0,1,2,3,4,5"><br><br>
+        
+        <label for="Y">Valores Y:</label>
+        <input type="text" id="Y" name="Y" value="-20,-12,1,15,4,21,41"><br><br>
+        
+        <label for="x_values">valores x:</label>
+        <input type="text" id="x_values" name="x_values" value="-1,0,1,2,3,4,5"><br><br>
+
+        <!-- Botón para realizar el cálculo de interpolación -->
+        <button onclick="calculateInterpolation()">Calcular Interpolación</button>
+    </div>
+
+    <!-- Mostrar los resultados de la interpolación -->
+    <div id="results">
+        <h2>Resultados de Interpolación</h2>
+        <p id="y_values"></p>
+    </div>
+
+    <!-- Mostrar el gráfico de interpolación -->
+    <div id="graph">
+        <h2>Gráfica</h2>
+        <div id="plotly-graph"></div>
+    </div>
+
+    <!-- Scripts de jQuery y Plotly para manipulación y visualización -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        // Función para mostrar el gráfico utilizando Plotly
+        function displayGraph(graph_json) {
+            var data = JSON.parse(graph_json);
+            Plotly.newPlot('plotly-graph', data, {});
+        }
+
+        // Función para realizar el cálculo de interpolación y mostrar resultados
+        function calculateInterpolation() {
+            // Obtener los valores X, Y y x desde los campos de entrada
+            var X = $('#X').val().split(',').map(parseFloat);
+            var Y = $('#Y').val().split(',').map(parseFloat);
+            var x_values = $('#x_values').val().split(',').map(parseFloat);
+
+            // Realizar una solicitud AJAX al servidor para realizar el cálculo de interpolación
+            $.ajax({
+                type: 'POST',
+                url: '/calculate',
+                contentType: 'application/json',
+                data: JSON.stringify({ X: X, Y: Y, x_values: x_values }),
+                success: function (data) {
+                    var y_values = data.y_values;
+                    $('#y_values').text('Interpolated Y values: ' + y_values.join(', '));
+
+                    // Mostrar el gráfico utilizando la función displayGraph
+                    displayGraph(data.graph_json);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
